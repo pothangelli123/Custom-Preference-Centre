@@ -1,0 +1,595 @@
+%%[
+SET @SubscriberKey = RequestParameter("SubscriberKey")
+IF EMPTY(@SubscriberKey) THEN
+Set @SubKey = _SubscriberKey
+ELSE
+Set @SubKey = @SubscriberKey
+ENDIF
+
+Set @Lookuprows = LookupRows("PreferenceCentre","Subscriberkey", @SubKey)
+
+set @rowCount = rowcount(@Lookuprows)
+
+if @rowCount > 0 then
+
+set @row = row(@Lookuprows, 1)
+Set @Cat1 = field(@row,"Category_1")
+Set @Cat2 = field(@row,"Category_2")
+Set @Cat3 = field(@row,"Category_3")
+Set @Cat4 = field(@row,"Category_4")
+Set @Cat5 = field(@row,"Category_5")
+Set @UnSubAll = field(@row,"UnsubscribeFromAll")
+
+ENDIF
+]%%
+
+
+  <meta name="ROBOTS" content="INDEX,FOLLOW"><meta name="keywords" content="">
+    <title>DU Customer Preferences | Digital Urth
+    </title>
+    <!-- META TAGS -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="">
+    <link rel="icon" type="image/png" href="" sizes="48x48">
+    <link rel="icon" type="image/png" href="" sizes="144x144">
+    <meta name="author" content="Digital Urth">
+    <meta name="description" content="Digital Urth communication preferences">
+    
+    <link rel="stylesheet" href="">
+    
+   <style>
+      @import url(https://fonts.googleapis.com/css?family=Montserrat:400,700);
+      
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700,800);
+     
+      *{
+        outline:0;
+        padding: 0;
+        margin:0;
+        -webkit-box-sizing:border-box;
+        box-sizing:border-box;
+      }
+      body{
+        background: #ffffff;
+        color:#60606e;
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: hidden;
+        max-width:100%;
+        margin:0 auto;
+      }
+      .logoprop{
+        margin-top:30px;
+        margin-left: 30px;
+      }
+      .footerMargin{
+        margin-bottom: 80px;
+      }
+      .footerDiv{
+        background: #ffffff;
+        width:auto !important;
+        max-width: 1440px !important;
+      }
+      .footerText{
+        margin-left: 120px;
+        margin-right: 120px;
+        padding-top: 80px;
+      }
+      
+      section{
+        margin-top: 150px;
+      }
+      .green-section{
+        background-color:#7beec7;
+      }
+      .white-section{
+        background-color:#fff;
+      }
+      .light-gray-section{
+        background-color: #efeff0;
+      }
+      img{
+        width:100%;
+      }
+      .categoryClass{
+        justify-content: center
+      }
+      .Headingcontainer{
+        background: #F6F9FB;
+        width: 100%;
+       
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+      }
+      .categoryContainer{
+        background: #F6F9FB;
+        width: 100%;
+       
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+      }
+      .centered-div{
+        width: 740px;
+        padding:40px 0px 0px 0px;
+        color: #252C34;
+      }
+      .category-div{
+        width: 770px;
+        padding:0px 0px 0px 0px;
+        color: #252C34;
+        background: #FFFFFF;
+      }
+     
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 50px;
+        height: 30px;
+      }
+   
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      /* The slider */
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #E2E4E7;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 2px;
+        bottom: 2px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+      }
+      input:checked+.slider {
+        background-color: #0076d3;
+      }
+      input:focus+.slider {
+        box-shadow: 0 0 0 #E2E4E7;
+      }
+      input:checked+.slider:before {
+        -webkit-transform: translateX(20px);
+        -ms-transform: translateX(20px);
+        transform: translateX(20px);
+      }
+      /* Rounded sliders */
+      .slider.round {
+        border-radius: 34px;
+      }
+      .slider.round:before {
+        border-radius: 50%;
+      }
+      .para{
+        margin: 0px !important;
+      }
+      .prefButton{
+        background-color: #0076d3;
+        border: none;
+        color: white;
+        padding: 12px 24px;
+        text-decoration: none;
+        margin: 4px 2px;
+        cursor: pointer;
+        font-family: '';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 24px;
+        border-radius: 6px;
+      }
+      @media (max-width: 991px) {
+        .section-title{
+          margin : 0 auto 50px;
+        }
+        .section-title span:after{
+          left:50%;
+          -webkit-transform:translateX(-50%);
+          -ms-transform:translateX(-50%);
+          transform:translateX(-50%);
+        }
+      }
+      /* ##### 01 : HEADER & FOOTER  ##### */
+      /*header*/
+      header.main-header{
+        height: 100px;
+        width: 100%;
+       
+        top:0;
+        left: 0;
+        z-index: 9;
+        background: #ffffff;
+      }
+    
+      header.main-header .logo{
+        float: left;
+        height: 100px;
+        line-height: 100px;
+      }
+      @media (max-width: 991px) {
+        header.main-header .menu-icon{
+          display: block;
+        }
+      }
+      /*footer*/
+      footer.main-footer{
+        padding: 50px 0;
+      }
+      footer.main-footer nav.footer-nav ul{
+        padding: 0;
+        margin: 0;
+      }
+      footer.main-footer nav.footer-nav ul li{
+        list-style: none;
+        float: left;
+        margin: 0 20px;
+        padding: 0;
+      }
+      footer.main-footer nav.footer-nav ul li:first-child{
+        margin:0 20px 0 0;
+      }
+      footer.main-footer nav.footer-nav ul li a{
+        text-transform: uppercase;
+        color:#9a9a9a;
+      }
+      @media (max-width: 991px) {
+        footer.main-footer *{
+          text-align: center;
+        }
+        .categoryClass{
+          justify-content: center
+        }
+        footer.main-footer ul.social-icons{
+          float: left;
+          width: 100%;
+          text-align: center;
+        }
+        footer.main-footer ul.social-icons li{
+          margin:0;
+          width: -webkit-calc(100% / 6);
+          width: calc(100% / 6)}
+        footer.main-footer nav.footer-nav ul li{
+          text-align: center;
+          width: 100%;
+        }
+        footer.main-footer nav.footer-nav ul li, footer.main-footer nav.footer-nav ul li:first-child{
+          margin-left:0;
+          margin-bottom: 20px;
+        }
+      }
+      @media (max-width:520px){
+        .categoryClass{
+          justify-content: center
+        }
+        .main-header{
+          height:64px !important;
+        }
+        .du-logo{
+          height: 36.39px;
+          width: 111.77px;
+        }
+        .logoprop{
+          margin-top:13px !important;
+          margin-left: 15px !important;
+          width:111.77px !important;
+          height:36.39px !important;
+        }
+        .footerMargin{
+          margin-bottom: 40px;
+        }
+        .mobilePadding{
+          padding: 24px 15px 0px 15px !important;
+        }
+        .mobileHeader{
+          font-family: 'Roboto' !important;
+          font-style: normal !important;
+          font-weight: 700 !important;
+          font-size: 28px !important;
+          line-height: 130% !important;
+          color: #252C34 !important;
+        }
+        .mobileSubHeader{
+          padding: 0px 0px 0px 0px !important;
+        }
+        .footerPadding{
+          padding: 33px 15px 40px 15px !important;
+          text-align: center !important;
+        }
+        .categoryPadding{
+          padding: 5px 0px 36px 0px !important;
+        }
+        .unsubAll{
+          padding: 30px 8px 0px 0px !important;
+        }
+        .buttonCenter{
+          text-align: center;
+        }
+      }
+      @media (max-width:780px) and (min-width:520px) {
+        .main-header{
+          height:50px !important;
+        }
+        .logoprop{
+          margin-top: 6.5px !important;
+          margin-left: 15px !important;
+          width:112px !important;
+          height:36px !important;
+        }
+        .footerMargin{
+          margin-bottom: 60px;
+        }
+      }
+      .heading {
+        height: 67px;
+        width: 1360px;
+        color: #FFFFFF;
+        font-family: Roboto;
+        font-size: 57px;
+        font-weight: 300;
+        line-height: 67px;
+        text-align: center;
+      }
+      .du-logo {
+        height: 47.21px;
+        width: 145px;
+      }
+      .main-header{
+        height:93px;
+      }
+      .logoprop{
+        margin-top:23px;
+        margin-left: 30px;
+        width:145px;
+        height:47px;
+      }
+      .communicationText{
+        padding-top:60px;
+      }
+      .footerClass{
+        background-color: #ffffff;
+      }
+      .mobilePadding{
+        margin: 0px 15px 0px 15px !important;
+      }
+    </style> 
+  
+    <!-- HEADER  -->
+    <header class="main-header">
+      <div>
+        <div class="Digital Urth-logo">
+          <a href=""><img src="https://assets-global.website-files.com/6463ee5d952e76ff32760f87/6464647f8c8fd228699e287f_631600bf44c1d2acd8312b6a_logo_new-p-500.png" alt="Digital Urth logo" class="logoprop"></a>
+        </div>
+      </div>
+    </header>
+    <div class="Headingcontainer" style="padding: 0px 0px 30px 0px;">
+      <div class="centered-div mobilePadding">   
+        <p class="mobileHeader" style="font-family: 'Roboto'; font-style: normal; font-weight: 700; font-size: 32px; line-height: 42px; color: #252C34;">
+        Manage Your Email Preferences
+        </p> 
+        <p style="font-family: 'Roboto'; font-style: normal; font-weight: 400; font-size: 16px; line-height: 24px; color: #5E6976;">
+          Here’s where you can control the types of emails you receive.
+        </p>
+      </div>
+    </div>
+    <form method="POST" action="https://mclxdpbrg2n9j1y8ftm46zszshqy.pub.sfmc-content.com/qhlf3kvg4gt" id="prefForm">
+      <div class="categoryContainer" style="padding: 0px 0px 0px 0px;">
+        <div class="category-div mobilePadding" style="border: 1px solid #E2E4E7;">  
+          <div style="font-family: 'Roboto'; font-style: normal; font-weight: 700; font-size: 24px; line-height: 32px; color: #252C34; padding: 16px 24px 12px 24px;" class="mobileSubHeader">
+            Email preferences:
+          </div>
+          <div style="padding: 12px 32px 0px 24px;" align="right">
+            Opt in
+          </div>
+          <div style="padding: 24px 24px 20px 24px;" class="categoryPadding">
+            <div style="border-bottom:1px solid #E2E4E7;">     
+            </div>  
+            
+            <!-- add logic for sk not in DE (set to true)-->
+            <div style="padding: 20px 0px 0px 0px;">
+              <div style="font-family: 'Roboto'; font-style: normal; font-weight: 500; font-size: 16px; line-height: 12px; color: #252C34; float:left; display:inline-block; padding: 0px 0px 0px 0px;width:60%;"> 
+                <p class="para" style="font-family: 'Roboto'; font-style: normal; font-weight: 500; font-size: 16px; line-height: 12px; color: #252C34; padding-bottom:5px;">Category 1
+                </p>
+                <p style="font-family: 'Roboto'; font-style: normal; font-weight: normal; font-size: 16px; line-height: 150%; color: #5E6976; padding-bottom:0px;">
+                 Description
+                </p>
+              </div>
+              <div style="float:right; display:inline-block; text-align: right; padding-top:5px; padding-right:8px;">
+                <label class="switch">
+   
+                 <input class="Events" onchange="TOGGLEFALSE()" id="Category 1" type="checkbox" name="Category 1" value="true" %%=IIF(@cat1 == 'true', "Checked","")=%%>
+                  <span class="slider round Events"></span> 
+                </label>
+              </div>
+            </div>
+            <div style="padding: 70px 0px 0px 0px;">     
+            </div>
+            
+            <!-- add logic for sk not in DE (set to true)-->
+            <div style="padding: 20px 0px 0px 0px;">
+              <div style="font-family: 'Roboto'; font-style: normal; font-weight: 500; font-size: 16px; line-height: 12px; color: #252C34; float:left; display:inline-block; padding: 0px 0px 0px 0px;width:60%;"> 
+                <p class="para" style="font-family: 'Roboto'; font-style: normal; font-weight: 500; font-size: 16px; line-height: 12px; color: #252C34; padding-bottom:5px;">Category 2
+                </p>
+                <p style="font-family: 'Roboto'; font-style: normal; font-weight: normal; font-size: 16px; line-height: 150%; color: #5E6976; padding-bottom:0px;">
+                  Description
+                </p>
+              </div>
+              <div style="float:right; display:inline-block; text-align: right; padding-top:5px; padding-right:8px;">
+                <label class="switch">
+                  <input class="Events" onchange="TOGGLEFALSE()" id="Category 2" type="checkbox" name="Category 2" value="true" %%=IIF(@cat2 == 'true', "Checked","")=%%>
+                  <span class="slider round Events"></span> 
+                </label>
+              </div>
+            </div>
+            <div style="padding: 70px 0px 0px 0px;">     
+            </div>
+            
+            <!-- add logic for sk not in DE (set to true)-->
+            <div style="padding: 20px 0px 0px 0px;">
+              <div style="font-family: 'Roboto'; font-style: normal; font-weight: 500; font-size: 16px; line-height: 12px; color: #252C34; float:left; display:inline-block; padding: 0px 0px 0px 0px;width:60%;"> 
+                <p class="para" style="font-family: 'Roboto'; font-style: normal; font-weight: 500; font-size: 16px; line-height: 12px; color: #252C34; padding-bottom:5px;">Category 3
+                </p>
+                <p style="font-family: 'Roboto'; font-style: normal; font-weight: normal; font-size: 16px; line-height: 150%; color: #5E6976; padding-bottom:0px;">
+                  Description
+                </p>
+              </div>
+              <div style="float:right; display:inline-block; text-align: right; padding-top:5px; padding-right:8px;">
+                <label class="switch">
+                  <input class="Events" onchange="TOGGLEFALSE()" id="Category 3" type="checkbox" name="Category 3" value="True" %%=IIF(@cat3 == 'true', "Checked","")=%%>
+                  <span class="slider round Events"></span> 
+                </label>
+              </div>
+            </div>
+            <div style="padding: 70px 0px 0px 0px;">     
+            </div>
+            
+            <!-- add logic for sk not in DE (set to true)-->
+            <div style="padding: 20px 0px 0px 0px;">
+              <div style="font-family: 'Roboto'; font-style: normal; font-weight: 500; font-size: 16px; line-height: 12px; color: #252C34; float:left; display:inline-block; padding: 0px 0px 0px 0px;width:60%;"> 
+                <p class="para" style="font-family: 'Roboto'; font-style: normal; font-weight: 500; font-size: 16px; line-height: 12px; color: #252C34; padding-bottom:5px;">Category 4
+                </p>
+                <p style="font-family: 'Roboto'; font-style: normal; font-weight: normal; font-size: 16px; line-height: 150%; color: #5E6976; padding-bottom:0px;">
+                  Description
+                </p>
+              </div>
+              <div style="float:right; display:inline-block; text-align: right; padding-top:5px; padding-right:8px;">
+                <label class="switch">
+                  <input class="Events" onchange="TOGGLEFALSE()" id="Category 4" type="checkbox" name="Category 4" value="true" %%=IIF(@cat4 == 'true', "Checked","")=%%>
+                  <span class="slider round Events"></span> 
+                </label>
+              </div>
+            </div>
+            <div style="padding: 70px 0px 0px 0px;">     
+            </div>
+            
+            <!-- add logic for sk not in DE (set to true)-->
+            <div style="padding: 20px 0px 0px 0px;">
+              <div style="font-family: 'Roboto'; font-style: normal; font-weight: 500; font-size: 16px; line-height: 12px; color: #252C34; float:left; display:inline-block; padding: 0px 0px 0px 0px;width:60%;"> 
+                <p class="para" style="font-family: 'Roboto'; font-style: normal; font-weight: 500; font-size: 16px; line-height: 12px; color: #252C34; padding-bottom:5px;">Category 5
+                </p>
+                <p style="font-family: 'Roboto'; font-style: normal; font-weight: normal; font-size: 16px; line-height: 150%; color: #5E6976; padding-bottom:0px;">
+                  Description
+                </p>
+              </div>
+              <div style="float:right; display:inline-block; text-align: right; padding-top:5px; padding-right:8px;">
+                <label class="switch">
+                  <input class="Events" onchange="TOGGLEFALSE()" id="Category 5" type="checkbox" name="Category 5" value="true" %%=IIF(@cat5 == 'true', "Checked","")=%%>
+                  <span class="slider round Events"></span> 
+                </label>
+              </div>
+            </div>
+            <div style="padding: 70px 0px 0px 0px;">     
+            </div>
+            
+            <div style="padding: 70px 0px 0px 0px;">     
+            </div>
+            
+            <div style="padding: 0px 0px 0px 0px; border-bottom:1px solid #E2E4E7;">     
+            </div>
+            <div style="padding: 30px 0px 100px 0px;">
+              <div style="float:left; display:inline-block; padding: 0px 0px 0px 0px; width:60%;"> 
+                <p class="para" style="font-family: 'Roboto'; font-style: normal; font-weight: 500; font-size: 16px; line-height: 150%; color: #252C34; padding-bottom:0px;">Unsubscribe from all categories
+                </p>
+                <p style="font-family: 'Roboto'; font-style: normal; font-weight: normal; font-size: 16px; line-height: 150%; color: #5E6976; padding-bottom:0px; margin: 0px;">
+                  Keep in mind—you’ll still get important credit and identity updates.
+                </p>
+              </div>
+              <div style="float:right; display:inline-block; text-align: right; padding-top:5px; padding-right:8px;" class="unsubAll">
+                <label class="switch">
+                  <input class="UnsubAll" id="UnsubAll" type="checkbox" name="UnsubAll" value="true" %%=IIF(@UnSubAll == 'true', "Checked","")=%%>
+                  <span class="slider round UnsubAll"></span> 
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div style="" align="">
+        </div>
+      </div>
+      <input type="hidden" name="sk" value="957904a8fac345bdb58445f429640e58">
+      <input type="hidden" name="jobid" value="5494011">
+      <div class="Headingcontainer" style="padding: 0px 0px 40px 0px;">
+        <div class="centered-div mobilePadding buttonCenter">   
+          <button type="submit" class="prefButton">Update preferences</button>
+          <!---->
+        </div>
+      </div>
+      <input type="hidden" name="Subkey" value="%%=v(@Subkey)=%%"> 
+      
+    </form>
+   
+    <div class="categoryClass" style="background-color: #0076d3; padding: 0px 0px 0px 0px;">
+      <div class="footerPadding" style="padding: 33px 40px 40px 40px;">
+        <span style="font-family: 'Roboto'; font-style: normal; font-weight: 400; font-size: 14px; line-height: 20px; color: #252C34;">&copy; 2024 Digital Urth, Inc. All rights reserved.<br><br>Write Something about Digital Urth
+        </span>
+      </div>
+    </div>
+
+<script>
+        const UnsubAll = document.getElementById('UnsubAll');
+        const Events = document.querySelectorAll('.Events');
+    
+        function updateUnsubAll() {
+            let allUnchecked = true;
+            Events.forEach(function(single) {
+                if (single.checked) {
+                    allUnchecked = false;
+                    return;
+                }
+            });
+            UnsubAll.checked = allUnchecked;
+        }
+    
+        UnsubAll.addEventListener('change', function() {
+            if (this.checked) {
+                Events.forEach(function(single) {
+                    single.checked = false;
+                });
+            } else {
+                Events.forEach(function(single) {
+                    single.checked = true;
+                });
+            }
+        });
+    
+        Events.forEach(function(single) {
+            single.addEventListener('change', function() {
+                updateUnsubAll();
+            });
+        });
+    
+        $('input:checkbox').change(function() {
+            if ($('input:checked').length == 0) {
+                $('#UnsubAll').prop("checked", true);
+            } else {
+                updateUnsubAll();
+            }
+        });
+    
+        function TOGGLEFALSE() {
+            $('#UnsubAll').prop("checked", false);
+        }
+    </script>
+
+
