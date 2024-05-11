@@ -1,0 +1,59 @@
+Backend AmpScript and ServerSide JavaScript
+%%[
+
+
+set @Category_1 = RequestParameter("Category 1")
+set @Category_2 = RequestParameter("Category 2")
+set @Category_3 = RequestParameter("Category 3")
+set @Category_4 = RequestParameter("Category 4")
+set @Category_5 = RequestParameter("Category 5")
+set @UnsubscribeFromAll = RequestParameter("UnsubAll") 
+set @SubscriberKey = RequestParameter("SubKey")
+set @currentTime  = Now()
+
+set @data = UpsertData("PreferenceCentre",1,"Subscriberkey", @SubscriberKey, "Category_1", @Category_1, "Category_2", @Category_2, "Category_3", @Category_3, "Category_4", @Category_4, "Category_5", @Category_5, "UnsubscribeFromAll", @UnsubscribeFromAll, "UpdatedDate", @currentTime)
+
+]%%
+
+<meta http-equiv="refresh" content="0; URL='%%=RedirectTo(CONCAT(CloudPagesURL(3109,"SubscriberKey",@SubscriberKey)))=%%'">
+
+
+
+<script runat="server">
+
+    Platform.Load("core", "1");
+
+    var api = new Script.Util.WSProxy();
+
+    try {
+
+        var subscriberKey = Variable.GetValue("@SubscriberKey");
+        var unsubscribe = Variable.GetValue("@UnsubscribeFromAll");
+
+        if (unsubscribe.toLowerCase() === "true") {
+            // Update subscriber status to Unsubscribed
+            var updateSubscriber = {
+                SubscriberKey: subscriberKey,
+                Status: "Unsubscribed"
+            };
+
+            var updateResult = api.updateItem("Subscriber", updateSubscriber);
+
+            
+        } else {
+            // Update subscriber status to Active
+            var updateSubscriber = {
+                SubscriberKey: subscriberKey,
+                Status: "Active"
+            };
+
+            var updateResult = api.updateItem("Subscriber", updateSubscriber);
+
+            
+        }
+
+    } catch(error) {
+        
+    } 
+
+</script>
